@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
@@ -5,7 +8,7 @@ import router from './router.js';
 
 const app = express();
 
-mongoose.connect('mongodb+srv://admin:admin@digitalent.hpf1j.mongodb.net/jadwalin?retryWrites=true&w=majority',
+mongoose.connect(process.env.MONGODB_URI,
 {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -42,6 +45,8 @@ app.get('/', (req, res) => {
 //untuk memanggil router.js
 app.use('/api', router);
 
-app.listen('3000', () => {
-    console.log('App listens on port 3000')
+const PORT = process.env.PORT || '4000';
+
+app.listen(PORT, () => {
+console.log(`App listens on port ${PORT}`)
 });
